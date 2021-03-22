@@ -1,10 +1,7 @@
 package com.example.study.controller;
 
 import com.example.study.model.SearchParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -16,7 +13,7 @@ public class PostController {
 
     // 아래 적은 PostMapping과 같음 : @RequestMapping(method=RequestMehod.POST, path = "/postMethod")
     @PostMapping("/postMethod") // api/postMethod
-    public SearchParam postMethod(@RequestBody SearchParam searchParam){
+    public SearchParam postMethod(@RequestBody SearchParam searchParam) {
         // SearchhParam 객체에서 Mapping.
         // Mapping 된 값을 다시 json형태로 바꾸어 return해준다.
 
