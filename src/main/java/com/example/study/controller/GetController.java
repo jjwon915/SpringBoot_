@@ -28,9 +28,9 @@ public class GetController {
     // 이렇게 Prameter가 많이 발생하는 경우. ==> 객체를 생성해 받아온다.
     @GetMapping("/getMultiParameter")
     public SearchParam getMultiPrameter(SearchParam searchParam) {
-        System.out.println(searchParam.getAccount());
-        System.out.println(searchParam.getEmail());
-        System.out.println(searchParam.getPage());
+        //System.out.println(searchParam.getAccount());
+        //System.out.println(searchParam.getEmail());
+        //System.out.println(searchParam.getPage());
 
         // {"account" : "", "email" : "", "page": 0}
         // 객체를 return 할때 스프링부트는 자동적으로 json형태로 return함.

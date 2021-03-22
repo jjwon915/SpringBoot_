@@ -13,9 +13,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.projectlombok:lombok:1.18.18'
-    compile 'org.progectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectionlombok:lombok:1.18.18'
+    // mysql
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'mysql:mysql-connector-java'
+    // lombok
+    implementation 'org.projectlombok:lombok'
+    compile('org.projectlombok:lombok')
+    //annotationProcessor 'org.projectionlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
