@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api") //Localhost:8080/api 로 주소 매칭.
 
+// GET 방식은 주소창에 파라미터가 노출된다.
 public class GetController {
     @RequestMapping(method = RequestMethod.GET, path = "/getMethod") // Localhost:8080/api/getMethod 주소 호출하면 사용자의 요청이 들어온다.
     public String getRequest(){
