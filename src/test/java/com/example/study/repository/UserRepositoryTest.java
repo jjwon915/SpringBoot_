@@ -3,10 +3,17 @@ package com.example.study.repository;
 
 import com.example.study.StudyApplicationTests;
 import com.example.study.model.entity.User;
+import com.sun.tools.javac.util.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRepositoryTest extends StudyApplicationTests {
 
@@ -32,15 +39,50 @@ public class UserRepositoryTest extends StudyApplicationTests {
         System.out.println("newUser : "  +newUser);
     }
 
+    @Test
     public void read(){
+        // 2번 Id 가진 user출력.
+        Optional<User> user = userRepository.findById(2L);
 
+        user.ifPresent(selectUser->{
+            System.out.println("user : " +selectUser);
+            System.out.println("email : " +selectUser.getEmail());
+        });
     }
 
+    @Test
     public void update(){
+        // Update를 위해서는 특정 user를 먼저 select해야함.
+        Optional<User> user = userRepository.findById(2L);
+
+        user.ifPresent(selectUser ->{
+            selectUser.setAccount("PPPP");
+            selectUser.setUpdatedAt(LocalDateTime.now());
+            selectUser.setUpdatedBy("update method()");
+
+            userRepository.save(selectUser);
+        });
 
     }
 
+    @Test
+    @Transactional // delete query를 실행하더라도 rollback 시켜 데이터를 원래상태로 돌려놓는다.
     public void delete(){
+        Optional<User> user = userRepository.findById(3L);
 
+        user.ifPresent(selectUser->{
+            userRepository.delete(selectUser);
+        });
+
+        Optional<User> deleteUser = userRepository.findById(3L);
+
+        //Assert.assertFalse(user.isPresent());
+
+        if(deleteUser.isPresent()){
+            System.out.println("데이터 존재 :" +deleteUser.get());
+        }
+        else{
+            System.out.println("데이터 없음");
+        }
     }
 }
