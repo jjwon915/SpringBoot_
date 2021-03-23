@@ -2,6 +2,7 @@ package com.example.study.repository;
 
 
 import com.example.study.StudyApplicationTests;
+import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
 import com.sun.tools.javac.util.Assert;
 import org.junit.jupiter.api.Test;
@@ -28,11 +29,11 @@ public class UserRepositoryTest extends StudyApplicationTests {
         // JPA를 통해 객체를 가지고 db 관리.
         User user = new User();
         // Id는 auto increment 이므로 쓰지 않는다.
-        user.setAccount("TestUser03");
-        user.setEmail("testUser03@gmail.com");
-        user.setPhoneNumber("010-3333-3333");
+        user.setAccount("TestUser02");
+        user.setEmail("testUser01@gmail.com");
+        user.setPhoneNumber("010-1111-1111");
         user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("TestUser3");
+        user.setCreatedBy("TestUser1");
 
         // save Method는 user를 저장하고 newUser를 받는다.
         User newUser =  userRepository.save(user);
@@ -40,13 +41,17 @@ public class UserRepositoryTest extends StudyApplicationTests {
     }
 
     @Test
+    @Transactional
     public void read(){
         // 2번 Id 가진 user출력.
-        Optional<User> user = userRepository.findById(2L);
+        // select * from user where id = ?
+        Optional<User> user = userRepository.findByAccount("TestUser01");
 
         user.ifPresent(selectUser->{
-            System.out.println("user : " +selectUser);
-            System.out.println("email : " +selectUser.getEmail());
+            selectUser.getOrderDetailList().stream().forEach(detail->{
+                Item item = detail.getItem();
+                System.out.println(detail.getItem());
+            });
         });
     }
 

@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-public class OrderDetailRepositoryTest extends StudyApplicationTests {
+public class OrderDetailRepositoryTest extends StudyApplicationTests{
+
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
@@ -18,14 +19,16 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
 
         orderDetail.setOrderAt(LocalDateTime.now());
 
-        // 어떤 사람? : 7번의 사람
-        orderDetail.setUserId(7L);
+        // 어떤 사람?
+        //orderDetail.setUserId(7L);
 
-        //어떤 상품? : 1번의 index Id ==> 연관관계 설정.
-        orderDetail.setItemId(1L);
+        // 어떤 상품 주문했는지. : 1번의 index Id ==> 연관관계 설정.
+        //orderDetail.setItemId(1L);
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
         Assertions.assertNotNull(newOrderDetail);
-
     }
+
+
 }
+

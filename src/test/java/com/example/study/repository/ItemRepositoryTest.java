@@ -22,11 +22,9 @@ public class ItemRepositoryTest extends StudyApplicationTests{
     public void create(){
 
         Item item = new Item();
-        item.setName("노트북");
-        item.setPrice(100000);
+        item.setName("노트북2");
+        item.setPrice(300000);
         item.setContent("삼성 노트북");
-        item.setPartnerId(100L);
-        item.setTitle("test");
 
         Item newItem = itemRepository.save(item);
         Assertions.assertNotNull(newItem);
@@ -39,10 +37,11 @@ public class ItemRepositoryTest extends StudyApplicationTests{
 
         // Optional : 있을 수도 있고 없을 수도 있음.
         Optional<Item> item = itemRepository.findById(id);
-        Assertions.assertTrue(item.isPresent());
-
-        item.ifPresent(i->{
+        item.ifPresent((i->{
             System.out.println(i);
-        });
+        }));
+
+        Assertions.assertTrue(item.isPresent());
     }
 }
+

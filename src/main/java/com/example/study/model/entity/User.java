@@ -7,13 +7,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 // DB의 Table 이름과 동일하게 생성한다면 @Table(name="user")안써도 됨.
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity // == table
-//@Table(name="user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +33,9 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    // 아래 user는 OrderDetail 클래스에 있는 user와 매칭.(자신은 1, OrderDetail은 N)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderDetail> orderDetailList;
 
 }
