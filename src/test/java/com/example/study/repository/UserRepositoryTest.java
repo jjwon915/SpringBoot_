@@ -5,6 +5,7 @@ import com.example.study.StudyApplicationTests;
 import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
 import com.sun.tools.javac.util.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,36 +24,38 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void create(){
-        // 쿼리문을 통해 아래와 같이 DB관리하지 않음.
-        // String sql = insert into user (%s, %s %d) value (account, email, age);
+        String account = "Test01";
+        String password = "Test01";
+        String status = "REGISTERED";
+        String email = "Test01@gamil.com";
+        String phoneNumber = "010-1111-2222";
+        LocalDateTime registeredAt = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "AdminServer";
 
-        // JPA를 통해 객체를 가지고 db 관리.
         User user = new User();
-        // Id는 auto increment 이므로 쓰지 않는다.
-        user.setAccount("TestUser02");
-        user.setEmail("testUser01@gmail.com");
-        user.setPhoneNumber("010-1111-1111");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("TestUser1");
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setStatus(status);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRegisteredAt(registeredAt);
+        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);
 
-        // save Method는 user를 저장하고 newUser를 받는다.
-        User newUser =  userRepository.save(user);
-        System.out.println("newUser : "  +newUser);
+        User newUser = userRepository.save(user);
+
+        Assertions.assertNotNull(newUser);
     }
 
     @Test
     @Transactional
     public void read(){
-        // 2번 Id 가진 user출력.
-        // select * from user where id = ?
-        Optional<User> user = userRepository.findByAccount("TestUser01");
+        User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
 
-        user.ifPresent(selectUser->{
-            selectUser.getOrderDetailList().stream().forEach(detail->{
-                Item item = detail.getItem();
-                System.out.println(detail.getItem());
-            });
-        });
+        // 번호가 없으면 error발생.
+        Assertions.assertNotNull(user);
+
     }
 
     @Test
