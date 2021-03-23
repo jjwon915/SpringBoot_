@@ -22,9 +22,17 @@ public class User {
 
     private String account;
 
+    private String password;
+
+    private String status;
+
     private String email;
 
     private String phoneNumber;
+
+    private LocalDateTime registeredAt;
+
+    private LocalDateTime unregisteredAt;
 
     private LocalDateTime createdAt;
 
@@ -34,8 +42,12 @@ public class User {
 
     private String updatedBy;
 
+/*
     // 아래 user는 OrderDetail 클래스에 있는 user와 매칭.(자신은 1, OrderDetail은 N)
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<OrderDetail> orderDetailList;
+
+ */
 
 }
