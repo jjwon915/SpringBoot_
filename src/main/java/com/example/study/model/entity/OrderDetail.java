@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity //order_detail table과 자동적으로 연결됨.
-//@ToString(exclude = {"user", "item"}) : 연관관계 설정에 대한 변수는 exclude해주는 것이 좋다.
+@ToString(exclude = {"orderGroup", "item"}) // : 연관관계 설정에 대한 변수는 exclude해주는 것이 좋다.
 public class OrderDetail {
 
     @Id
@@ -36,9 +36,12 @@ public class OrderDetail {
 
     private String updatedBy;
 
-    private Long itemId;
+    @ManyToOne
+    private OrderGroup orderGroup;
 
-    private Long orderGroupId;
+    @ManyToOne
+    private Item item;
+
 
 
     /*

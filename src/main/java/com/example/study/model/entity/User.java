@@ -3,6 +3,7 @@ package com.example.study.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity // == table
+@ToString(exclude = {"orderGroup"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +44,8 @@ public class User {
 
     private String updatedBy;
 
-/*
-    // 아래 user는 OrderDetail 클래스에 있는 user와 매칭.(자신은 1, OrderDetail은 N)
-
+    // User : OrderGroup => 1 : N의 관계이므로 List로 받아와야함.
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<OrderDetail> orderDetailList;
-
- */
+    private List<OrderGroup> orderGroupList;
 
 }

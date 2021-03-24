@@ -3,6 +3,7 @@ package com.example.study.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor // 모든 생성자.
 @NoArgsConstructor // 기본 생성자
 @Entity
+@ToString(exclude = {"orderDetailList", "partner"})
 public class Item {
     @Id // index column을 나타냄.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +43,13 @@ public class Item {
 
     private String updatedBy;
 
-    private Long partnerId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item") // Item 1 : N OrderDetail
+    private List<OrderDetail> orderDetailList;
+
+    // Item N : 1 Partner
+    @ManyToOne
+    private Partner partner;
+
 
     /*
     //1:N

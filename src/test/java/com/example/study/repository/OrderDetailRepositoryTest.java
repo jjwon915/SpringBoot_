@@ -18,8 +18,8 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests{
     public void create(){
         OrderDetail orderDetail = new OrderDetail();
 
-        orderDetail.setOrderGroupId(1L); // 어떠한 장바구니에
-        orderDetail.setItemId(1L); // 어떠한 상품인지.
+        //orderDetail.setOrderGroupId(1L); // 어떠한 장바구니에 Long -> Group
+        //orderDetail.setItemId(1L); // 어떠한 상품인지.
 
         orderDetail.setStatus("WAITING");
         orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
