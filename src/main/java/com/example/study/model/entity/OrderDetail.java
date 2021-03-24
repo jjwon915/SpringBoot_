@@ -1,9 +1,7 @@
 package com.example.study.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,6 +18,8 @@ import java.time.LocalDateTime;
 @Entity //order_detail table과 자동적으로 연결됨.
 @ToString(exclude = {"orderGroup", "item"}) // : 연관관계 설정에 대한 변수는 exclude해주는 것이 좋다.
 @EntityListeners(AuditingEntityListener.class)
+@Builder
+@Accessors(chain = true)
 public class OrderDetail {
 
     @Id

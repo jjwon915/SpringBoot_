@@ -40,9 +40,16 @@ public class UserRepositoryTest extends StudyApplicationTests {
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setRegisteredAt(registeredAt);
-        //user.setCreatedAt(createdAt);
-        //user.setCreatedBy(createdBy);
 
+        /*
+        // Lombok의 Annotation으로 Builder 패턴을 통해 객체를 생성하면 편리하다.
+        User u = User.builder()
+                .account(account)
+                .password(password)
+                .status(status)
+                .email(email)
+                .build();
+         */
         User newUser = userRepository.save(user);
 
         Assertions.assertNotNull(newUser);
@@ -52,27 +59,38 @@ public class UserRepositoryTest extends StudyApplicationTests {
     @Transactional
     public void read(){
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+
+         /*
+        // update를 할 때는 chain pattern을 사용하면 편리하다. @Accessors(chain = true) 을 사용하면 이렇게 사용 가능.
+        user
+                .setEmail("")
+                .setPhoneNumber("")
+                .setStatus("");
+
+        User u = new User().setAccount("").setEmail("").setPassword("");
+          */
+
         System.out.println("------------조회--------------");
         System.out.println("계정 : " + user.getAccount());
+        if(user != null) {
+            user.getOrderGroupList().stream().forEach(orderGroup -> {
+                System.out.println("------------주문 묶음-------------");
+                System.out.println("수령인 : " + orderGroup.getRevName());
+                System.out.println("수령지 : " + orderGroup.getRevAddress());
+                System.out.println("총금액 : " + orderGroup.getTotalPrice());
+                System.out.println("총수량 : " + orderGroup.getTotalQuantity());
+                System.out.println("------------주문 상세-------------");
 
-        user.getOrderGroupList().stream().forEach(orderGroup -> {
-            System.out.println("------------주문 묶음-------------");
-            System.out.println("수령인 : " +orderGroup.getRevName());
-            System.out.println("수령지 : " +orderGroup.getRevAddress());
-            System.out.println("총금액 : " +orderGroup.getTotalPrice());
-            System.out.println("총수량 : " +orderGroup.getTotalQuantity());
-            System.out.println("------------주문 상세-------------");
-
-            orderGroup.getOrderDetailList().forEach(orderDetail -> {
-                System.out.println("파트너사 이름 : " +orderDetail.getItem().getPartner().getName());
-                System.out.println("파트너사 카테고리 : " +orderDetail.getItem().getPartner().getCategory().getTitle());
-                System.out.println("주문 상품 : " +orderDetail.getItem().getName());
-                System.out.println("고객센터 번호 : " +orderDetail.getItem().getPartner().getCallCenter());
-                System.out.println("주문의 상태 : " +orderDetail.getStatus());
-                System.out.println("도착예정일자 : " +orderDetail.getArrivalDate());
+                orderGroup.getOrderDetailList().forEach(orderDetail -> {
+                    System.out.println("파트너사 이름 : " + orderDetail.getItem().getPartner().getName());
+                    System.out.println("파트너사 카테고리 : " + orderDetail.getItem().getPartner().getCategory().getTitle());
+                    System.out.println("주문 상품 : " + orderDetail.getItem().getName());
+                    System.out.println("고객센터 번호 : " + orderDetail.getItem().getPartner().getCallCenter());
+                    System.out.println("주문의 상태 : " + orderDetail.getStatus());
+                    System.out.println("도착예정일자 : " + orderDetail.getArrivalDate());
+                });
             });
-        });
-
+        }
     }
 
     @Test

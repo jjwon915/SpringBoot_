@@ -1,9 +1,7 @@
 package com.example.study.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,6 +20,8 @@ import java.util.List;
 @Entity // == table
 @ToString(exclude = {"orderGroupList"})
 @EntityListeners(AuditingEntityListener.class)
+@Builder
+@Accessors(chain = true) // builder와 비슷. chaining된 형태로 생성 가능.
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
