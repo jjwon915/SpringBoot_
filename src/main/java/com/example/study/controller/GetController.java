@@ -1,6 +1,7 @@
 package com.example.study.controller;
 
 import com.example.study.model.SearchParam;
+import com.example.study.model.network.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,6 +37,12 @@ public class GetController {
         // 객체를 return 할때 스프링부트는 자동적으로 json형태로 return함.
 
         return searchParam;
+    }
+
+    @GetMapping("/header")
+    public Header getHeader(){
+        // {"resultCode" : "OK", "description" : "OK"}
+        return Header.builder().resultCode("OK").description("OK").build();
     }
 
 }
